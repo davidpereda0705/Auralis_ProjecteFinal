@@ -1,0 +1,601 @@
+/* ============================================================
+   AURALIS - PÁGINA DE INSTRUCCIONES (instrucciones.html)
+   ============================================================ */
+
+.instrucciones-page {
+    position: relative;
+    width: 100vw;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.instrucciones-container {
+    position: relative;
+    z-index: 2;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 100px 20px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* ============================================================
+   TÍTULO
+   ============================================================ */
+.page-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+    color: #ffd93d;
+    text-align: center;
+    letter-spacing: 4px;
+    line-height: 1.4;
+    margin-bottom: 0.3rem;
+    text-shadow: 
+        -4px -4px 0 #ffffff,
+         4px -4px 0 #ffffff,
+        -4px  4px 0 #ffffff,
+         4px  4px 0 #ffffff,
+        -4px  0   0 #ffffff,
+         4px  0   0 #ffffff,
+         0   -4px 0 #ffffff,
+         0    4px 0 #ffffff,
+         8px  8px 0 #1c3a6e,
+        10px 10px 0 #0f2342,
+         0 0 25px rgba(255, 217, 61, 0.7);
+    -webkit-text-stroke: 2px #1c3a6e;
+    animation: title-enter 0.8s ease-out;
+}
+
+@keyframes title-enter {
+    from { opacity: 0; transform: translateY(-30px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.page-subtitle {
+    text-align: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(0.6rem, 1.4vw, 0.8rem);
+    color: #ffffff;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 0 #1c3a6e, 3px 3px 0 #0f2342;
+    line-height: 1.8;
+}
+
+/* ============================================================
+   SECCIONES
+   ============================================================ */
+.section {
+    background: #f8f8f0;
+    border: 4px solid #1c3a6e;
+    border-radius: 8px;
+    padding: 1.8rem 2rem;
+    box-shadow: 
+        0 6px 0 #0f2342,
+        0 10px 25px rgba(0, 0, 0, 0.35),
+        inset 0 0 0 3px #ffffff;
+    animation: section-enter 0.6s ease-out backwards;
+}
+
+.section:nth-of-type(1) { animation-delay: 0.05s; }
+.section:nth-of-type(2) { animation-delay: 0.15s; }
+.section:nth-of-type(3) { animation-delay: 0.25s; }
+.section:nth-of-type(4) { animation-delay: 0.35s; }
+.section:nth-of-type(5) { animation-delay: 0.45s; }
+
+@keyframes section-enter {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 3px dashed rgba(28, 58, 110, 0.3);
+}
+
+.section-icon {
+    font-size: 1.8rem;
+    filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.15));
+}
+
+.section-header h2 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(0.9rem, 2.2vw, 1.2rem);
+    color: #1c3a6e;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 0 rgba(255, 217, 61, 0.6);
+    margin: 0;
+}
+
+.section-hint {
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+    color: #e63946;
+    text-align: center;
+    margin-bottom: 1.2rem;
+    font-style: italic;
+    animation: hint-blink 2s ease-in-out infinite;
+}
+
+@keyframes hint-blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.5; }
+}
+
+.section-text {
+    font-family: 'VT323', monospace;
+    font-size: 1.25rem;
+    color: #1c3a6e;
+    margin-bottom: 1.2rem;
+    text-align: center;
+}
+
+/* ============================================================
+   SECCIÓN 1: TECLADO INTERACTIVO
+   ============================================================ */
+.keyboard-demo {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    padding: 1rem 0;
+}
+
+.keyboard-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.block-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.6rem;
+    color: #e63946;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.block-desc {
+    font-family: 'VT323', monospace;
+    font-size: 1.1rem;
+    color: #4a6a9e;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.key-grid {
+    display: grid;
+    gap: 4px;
+    justify-content: center;
+}
+
+.key-grid.wasd,
+.key-grid.arrows {
+    grid-template-columns: repeat(3, 48px);
+    grid-template-rows: repeat(2, 48px);
+}
+
+.key-grid.wide {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 6px;
+}
+
+/* Teclas */
+.key {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: #ffffff;
+    border: 3px solid #1c3a6e;
+    border-radius: 6px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.8rem;
+    color: #1c3a6e;
+    box-shadow: 
+        0 4px 0 #0f2342,
+        inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+    transition: all 0.05s ease-out;
+    user-select: none;
+}
+
+.key-wide {
+    width: 100%;
+    min-width: 140px;
+    height: 44px;
+    font-size: 0.65rem;
+    padding: 0 0.8rem;
+    letter-spacing: 1px;
+}
+
+.key-empty {
+    width: 48px;
+    height: 48px;
+}
+
+/* Tecla pulsada (efecto de iluminación) */
+.key.active {
+    background: #ffd93d;
+    color: #1c3a6e;
+    transform: translateY(4px);
+    box-shadow: 
+        0 0 0 #0f2342,
+        0 0 15px #ffd93d,
+        0 0 30px rgba(255, 217, 61, 0.7),
+        inset 0 0 10px rgba(255, 217, 61, 0.5);
+    animation: key-glow 0.3s ease-out;
+}
+
+@keyframes key-glow {
+    from {
+        box-shadow: 
+            0 0 0 #0f2342,
+            0 0 40px #ffd93d,
+            0 0 70px rgba(255, 217, 61, 1);
+    }
+    to {
+        box-shadow: 
+            0 0 0 #0f2342,
+            0 0 15px #ffd93d,
+            0 0 30px rgba(255, 217, 61, 0.7),
+            inset 0 0 10px rgba(255, 217, 61, 0.5);
+    }
+}
+
+/* ============================================================
+   SECCIÓN 2: COMBATE (menú Pokémon)
+   ============================================================ */
+.battle-menu-demo {
+    background: #1c3a6e;
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 1rem;
+    border: 3px solid #0f2342;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+.battle-dialog {
+    background: #f8f8f0;
+    border: 4px solid #1c3a6e;
+    border-radius: 6px;
+    padding: 1.5rem 1.2rem;
+    display: flex;
+    align-items: center;
+    box-shadow: inset 0 0 0 3px #ffffff;
+    position: relative;
+}
+
+.battle-dialog span {
+    font-family: 'VT323', monospace;
+    font-size: 1.4rem;
+    color: #1c3a6e;
+}
+
+.battle-dialog::after {
+    content: "▼";
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    color: #1c3a6e;
+    font-size: 0.8rem;
+    animation: bounce-down 1s ease-in-out infinite;
+}
+
+@keyframes bounce-down {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(4px); }
+}
+
+.battle-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+}
+
+.battle-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 1rem 0.9rem 1.8rem;
+    background: #f8f8f0;
+    border: 3px solid #1c3a6e;
+    border-radius: 6px;
+    box-shadow: 0 4px 0 #0f2342;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.7rem;
+    color: #1c3a6e;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.12s;
+    text-align: left;
+}
+
+.battle-btn .b-cursor {
+    position: absolute;
+    left: 0.4rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #e63946;
+    font-size: 0.75rem;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.battle-btn .b-icon {
+    font-size: 1.1rem;
+}
+
+.battle-btn:hover {
+    background: #ffd93d;
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #0f2342;
+}
+
+.battle-btn:hover .b-cursor {
+    opacity: 1;
+    animation: cursor-bounce 0.8s ease-in-out infinite;
+}
+
+@keyframes cursor-bounce {
+    0%, 100% { transform: translateY(-50%) translateX(0); }
+    50%      { transform: translateY(-50%) translateX(3px); }
+}
+
+/* ============================================================
+   SECCIÓN 3: TIPOS ELEMENTALES
+   ============================================================ */
+.types-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.8rem;
+}
+
+.type-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1.2rem 0.6rem;
+    border: 3px solid #1c3a6e;
+    border-radius: 8px;
+    box-shadow: 0 4px 0 #0f2342;
+    transition: all 0.15s;
+    cursor: pointer;
+}
+
+.type-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 0 #0f2342;
+}
+
+.type-emoji {
+    font-size: 2.2rem;
+    filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.2));
+}
+
+.type-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+}
+
+.type-card.tipo-tierra { background: linear-gradient(160deg, #f0dcb4, #a0673f); color: #ffffff; }
+.type-card.tipo-electrico { background: linear-gradient(160deg, #fff8a0, #f7b500); color: #1c3a6e; }
+.type-card.tipo-planta { background: linear-gradient(160deg, #d4f0a8, #4dc04d); color: #ffffff; }
+.type-card.tipo-fuego { background: linear-gradient(160deg, #ffd4a8, #e63946); color: #ffffff; }
+.type-card.tipo-agua { background: linear-gradient(160deg, #c8e8ff, #4a90e2); color: #ffffff; }
+.type-card.tipo-aire { background: linear-gradient(160deg, #e8f4ff, #9ec8e8); color: #1c3a6e; }
+
+/* ============================================================
+   SECCIÓN 4: ESTADOS ALTERADOS
+   ============================================================ */
+.status-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1.2rem;
+    background: rgba(255, 217, 61, 0.2);
+    border: 2px solid rgba(28, 58, 110, 0.3);
+    border-radius: 8px;
+    border-left: 6px solid #1c3a6e;
+    transition: all 0.15s;
+}
+
+.status-item:hover {
+    background: rgba(255, 217, 61, 0.45);
+    transform: translateX(4px);
+}
+
+.status-icon {
+    font-size: 1.8rem;
+    filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.15));
+    flex-shrink: 0;
+}
+
+.status-info h3 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.7rem;
+    color: #1c3a6e;
+    margin-bottom: 0.3rem;
+    letter-spacing: 1px;
+}
+
+.status-info p {
+    font-family: 'VT323', monospace;
+    font-size: 1.15rem;
+    color: #4a6a9e;
+    line-height: 1.2;
+}
+
+.status-burn { border-left-color: #ee8130; }
+.status-paralysis { border-left-color: #f7d02c; }
+.status-stun { border-left-color: #f0b6ff; }
+.status-sleep { border-left-color: #8b6bb5; }
+.status-blind { border-left-color: #8a8a8a; }
+
+/* ============================================================
+   SECCIÓN 5: OBJETOS
+   ============================================================ */
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.9rem;
+}
+
+.item-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.2rem 0.8rem;
+    background: rgba(255, 217, 61, 0.15);
+    border: 3px solid #1c3a6e;
+    border-radius: 8px;
+    box-shadow: 0 4px 0 #0f2342;
+    transition: all 0.15s;
+    text-align: center;
+}
+
+.item-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 217, 61, 0.4);
+    box-shadow: 0 8px 0 #0f2342;
+}
+
+.item-emoji {
+    font-size: 2.4rem;
+    filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.2));
+}
+
+.item-card h3 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.65rem;
+    color: #1c3a6e;
+    letter-spacing: 1px;
+}
+
+.item-card p {
+    font-family: 'VT323', monospace;
+    font-size: 1.1rem;
+    color: #4a6a9e;
+    line-height: 1.2;
+}
+
+/* ============================================================
+   CTA FINAL
+   ============================================================ */
+.cta-final {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-play {
+    display: inline-block;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.9rem;
+    background: #e63946;
+    color: #ffffff;
+    padding: 1.2rem 2.2rem;
+    text-decoration: none;
+    border: 4px solid #1c3a6e;
+    border-radius: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 0 #b3252f;
+    box-shadow: 
+        0 6px 0 #0f2342,
+        inset 0 -4px 0 rgba(0,0,0,0.2),
+        inset 0 3px 0 rgba(255,255,255,0.25);
+    transition: all 0.12s;
+}
+
+.btn-play:hover {
+    background: #ffd93d;
+    color: #1c3a6e;
+    text-shadow: 2px 2px 0 rgba(255,255,255,0.5);
+    transform: translateY(3px);
+    box-shadow: 
+        0 3px 0 #0f2342,
+        inset 0 -4px 0 rgba(0,0,0,0.2),
+        inset 0 3px 0 rgba(255,255,255,0.25);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 800px) {
+    .keyboard-demo {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+    }
+    
+    .battle-menu-demo {
+        grid-template-columns: 1fr;
+    }
+    
+    .battle-options {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .instrucciones-container {
+        padding: 90px 15px 40px;
+        gap: 22px;
+    }
+    
+    .section {
+        padding: 1.4rem 1.2rem;
+    }
+    
+    .key {
+        width: 42px;
+        height: 42px;
+        font-size: 0.7rem;
+    }
+    
+    .key-empty {
+        width: 42px;
+        height: 42px;
+    }
+    
+    .key-grid.wasd,
+    .key-grid.arrows {
+        grid-template-columns: repeat(3, 42px);
+        grid-template-rows: repeat(2, 42px);
+    }
+    
+    .section-text,
+    .status-info p,
+    .item-card p {
+        font-size: 1.05rem;
+    }
+    
+    .btn-play {
+        font-size: 0.75rem;
+        padding: 1rem 1.6rem;
+    }
+    
+    .battle-btn {
+        font-size: 0.6rem;
+        padding: 0.7rem 0.6rem 0.7rem 1.5rem;
+    }
+}

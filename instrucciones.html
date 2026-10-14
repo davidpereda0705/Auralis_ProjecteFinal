@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auralis: El Despertar - Instrucciones</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/instrucciones.css">
+</head>
+<body class="instrucciones-page">
+    
+    <!-- FONDO DEL MUNDO -->
+    <div class="world-bg">
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="cloud cloud-4"></div>
+        <div class="cloud cloud-5"></div>
+        <div class="cloud cloud-6"></div>
+    </div>
+    
+    <!-- OVERLAY DE DESTELLO -->
+    <div class="flash-overlay"></div>
+    
+    <!-- BOTÓN VOLVER -->
+    <a href="index.html" class="back-btn">
+        <span class="back-arrow">◀</span>
+        <span>VOLVER</span>
+    </a>
+    
+    <!-- CONTENIDO -->
+    <div class="instrucciones-container">
+        
+        <h1 class="page-title">INSTRUCCIONES</h1>
+        <p class="page-subtitle">Aprende a dominar los seis elementos</p>
+        
+        <!-- ====================================================
+             SECCIÓN 1: TECLADO INTERACTIVO
+             ==================================================== -->
+        <section class="section keyboard-section">
+            <header class="section-header">
+                <span class="section-icon">🎮</span>
+                <h2>CONTROLES</h2>
+            </header>
+            
+            <p class="section-hint">¡Pulsa las teclas de tu teclado y míralas iluminarse!</p>
+            
+            <div class="keyboard-demo">
+                <!-- Bloque WASD -->
+                <div class="keyboard-block">
+                    <div class="block-label">MOVIMIENTO</div>
+                    <div class="key-grid wasd">
+                        <div class="key-empty"></div>
+                        <div class="key" data-key="w">W</div>
+                        <div class="key-empty"></div>
+                        <div class="key" data-key="a">A</div>
+                        <div class="key" data-key="s">S</div>
+                        <div class="key" data-key="d">D</div>
+                    </div>
+                    <p class="block-desc">Mover al Viajero</p>
+                </div>
+                
+                <!-- Bloque Flechas -->
+                <div class="keyboard-block">
+                    <div class="block-label">MENÚ</div>
+                    <div class="key-grid arrows">
+                        <div class="key-empty"></div>
+                        <div class="key" data-key="arrowup">↑</div>
+                        <div class="key-empty"></div>
+                        <div class="key" data-key="arrowleft">←</div>
+                        <div class="key" data-key="arrowdown">↓</div>
+                        <div class="key" data-key="arrowright">→</div>
+                    </div>
+                    <p class="block-desc">Navegar opciones</p>
+                </div>
+                
+                <!-- Bloque Enter / Espacio -->
+                <div class="keyboard-block">
+                    <div class="block-label">ACCIÓN</div>
+                    <div class="key-grid wide">
+                        <div class="key key-wide" data-key="enter">ENTER</div>
+                        <div class="key key-wide" data-key=" ">ESPACIO</div>
+                    </div>
+                    <p class="block-desc">Confirmar / Interactuar</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ====================================================
+             SECCIÓN 2: COMBATE (menú Pokémon)
+             ==================================================== -->
+        <section class="section combat-section">
+            <header class="section-header">
+                <span class="section-icon">⚔️</span>
+                <h2>COMBATE POR TURNOS</h2>
+            </header>
+            
+            <p class="section-text">En cada turno elige una acción. Si aciertas con el tipo elemental, harás más daño.</p>
+            
+            <div class="battle-menu-demo">
+                <div class="battle-dialog">
+                    <span>¿Qué hará Bublo?</span>
+                </div>
+                <div class="battle-options">
+                    <button class="battle-btn">
+                        <span class="b-cursor">▶</span>
+                        <span class="b-icon">⚔️</span>
+                        <span class="b-label">LUCHAR</span>
+                    </button>
+                    <button class="battle-btn">
+                        <span class="b-cursor">▶</span>
+                        <span class="b-icon">🎒</span>
+                        <span class="b-label">BOLSA</span>
+                    </button>
+                    <button class="battle-btn">
+                        <span class="b-cursor">▶</span>
+                        <span class="b-icon">🔮</span>
+                        <span class="b-label">AURALIS</span>
+                    </button>
+                    <button class="battle-btn">
+                        <span class="b-cursor">▶</span>
+                        <span class="b-icon">🏃</span>
+                        <span class="b-label">HUIR</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ====================================================
+             SECCIÓN 3: TIPOS ELEMENTALES
+             ==================================================== -->
+        <section class="section types-section">
+            <header class="section-header">
+                <span class="section-icon">🌍</span>
+                <h2>LOS 6 ELEMENTOS</h2>
+            </header>
+            
+            <p class="section-text">Cada Auralis tiene un elemento. Los tipos se contrarrestan entre sí:</p>
+            
+            <div class="types-grid">
+                <div class="type-card tipo-tierra">
+                    <span class="type-emoji">🪨</span>
+                    <span class="type-name">TIERRA</span>
+                </div>
+                <div class="type-card tipo-electrico">
+                    <span class="type-emoji">⚡</span>
+                    <span class="type-name">ELÉCTRICO</span>
+                </div>
+                <div class="type-card tipo-planta">
+                    <span class="type-emoji">🌿</span>
+                    <span class="type-name">PLANTA</span>
+                </div>
+                <div class="type-card tipo-fuego">
+                    <span class="type-emoji">🔥</span>
+                    <span class="type-name">FUEGO</span>
+                </div>
+                <div class="type-card tipo-agua">
+                    <span class="type-emoji">💧</span>
+                    <span class="type-name">AGUA</span>
+                </div>
+                <div class="type-card tipo-aire">
+                    <span class="type-emoji">🌪️</span>
+                    <span class="type-name">AIRE</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ====================================================
+             SECCIÓN 4: ESTADOS ALTERADOS
+             ==================================================== -->
+        <section class="section status-section">
+            <header class="section-header">
+                <span class="section-icon">⚠️</span>
+                <h2>ESTADOS ALTERADOS</h2>
+            </header>
+            
+            <div class="status-list">
+                <div class="status-item status-burn">
+                    <span class="status-icon">🔥</span>
+                    <div class="status-info">
+                        <h3>QUEMADURA</h3>
+                        <p>Daño continuo durante 5 turnos.</p>
+                    </div>
+                </div>
+                <div class="status-item status-paralysis">
+                    <span class="status-icon">⚡</span>
+                    <div class="status-info">
+                        <h3>PARÁLISIS</h3>
+                        <p>Puede impedir atacar en tu turno.</p>
+                    </div>
+                </div>
+                <div class="status-item status-stun">
+                    <span class="status-icon">💫</span>
+                    <div class="status-info">
+                        <h3>ATURDIMIENTO</h3>
+                        <p>El enemigo pierde su siguiente turno.</p>
+                    </div>
+                </div>
+                <div class="status-item status-sleep">
+                    <span class="status-icon">💤</span>
+                    <div class="status-info">
+                        <h3>SUEÑO</h3>
+                        <p>El enemigo no puede atacar hasta despertar.</p>
+                    </div>
+                </div>
+                <div class="status-item status-blind">
+                    <span class="status-icon">🌫️</span>
+                    <div class="status-info">
+                        <h3>CEGUERA</h3>
+                        <p>Aumenta la probabilidad de fallar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ====================================================
+             SECCIÓN 5: OBJETOS
+             ==================================================== -->
+        <section class="section items-section">
+            <header class="section-header">
+                <span class="section-icon">🎒</span>
+                <h2>OBJETOS</h2>
+            </header>
+            
+            <div class="items-grid">
+                <div class="item-card">
+                    <span class="item-emoji">⚪</span>
+                    <h3>Auraball</h3>
+                    <p>Captura Auralis salvajes.</p>
+                </div>
+                <div class="item-card">
+                    <span class="item-emoji">🧪</span>
+                    <h3>Poción</h3>
+                    <p>Restaura 20 HP.</p>
+                </div>
+                <div class="item-card">
+                    <span class="item-emoji">💉</span>
+                    <h3>Antídoto</h3>
+                    <p>Cura estados alterados.</p>
+                </div>
+                <div class="item-card">
+                    <span class="item-emoji">💎</span>
+                    <h3>Cristal</h3>
+                    <p>Potencia un elemento.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA FINAL -->
+        <div class="cta-final">
+            <a href="juego.html" class="btn-play">¡ENTENDIDO, A JUGAR!</a>
+        </div>
+        
+    </div>
+    
+    <!-- COPYRIGHT -->
+    <div class="copyright">© 2026 Auralis Team · v1.0</div>
+    
+    <script src="js/main.js"></script>
+</body>
+</html>

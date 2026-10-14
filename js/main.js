@@ -287,7 +287,64 @@ document.addEventListener('DOMContentLoaded', () => {
         const initial = document.querySelector('.pokemon-item.selected');
         if (initial) loadAuralis(initial.dataset.pokemon);
     }
-    
+
+    // ============================================================
+    // LÓGICA DE LA PÁGINA INSTRUCCIONES (instrucciones.html)
+    // ============================================================
+    const keys = document.querySelectorAll('.key[data-key]');
+
+    if (keys.length > 0) {
+        // Mapa de teclas especiales a nombres normalizados
+        const KEY_MAP = {
+            ' ': ' ',
+            'Space': ' ',
+            'Enter': 'enter',
+            'ArrowUp': 'arrowup',
+            'ArrowDown': 'arrowdown',
+            'ArrowLeft': 'arrowleft',
+            'ArrowRight': 'arrowright'
+        };
+
+        function normalizeKey(key) {
+            if (KEY_MAP[key]) return KEY_MAP[key];
+            return key.toLowerCase();
+        }
+
+        function activateKey(normalizedKey) {
+            keys.forEach(k => {
+                if (k.dataset.key === normalizedKey) {
+                    k.classList.add('active');
+                }
+            });
+        }
+
+        function deactivateKey(normalizedKey) {
+            keys.forEach(k => {
+                if (k.dataset.key === normalizedKey) {
+                    k.classList.remove('active');
+                }
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            const norm = normalizeKey(e.key);
+            activateKey(norm);
+        });
+
+        document.addEventListener('keyup', (e) => {
+            const norm = normalizeKey(e.key);
+            deactivateKey(norm);
+        });
+
+        // Click en las teclas también las activa brevemente
+        keys.forEach(k => {
+            k.addEventListener('click', () => {
+                k.classList.add('active');
+                setTimeout(() => k.classList.remove('active'), 200);
+            });
+        });
+    }
+
     // ============================================================
     // DESBLOQUEAR AUDIO AL PRIMER CLICK
     // ============================================================
