@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auralis: El Despertar - Los Auralis</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/auralis.css">
+</head>
+<body class="auralis-page">
+    
+    <!-- FONDO DEL MUNDO -->
+    <div class="world-bg">
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="cloud cloud-4"></div>
+        <div class="cloud cloud-5"></div>
+        <div class="cloud cloud-6"></div>
+    </div>
+    
+    <!-- OVERLAY DE DESTELLO -->
+    <div class="flash-overlay"></div>
+    
+    <!-- BOTÓN VOLVER -->
+    <a href="index.html" class="back-btn">
+        <span class="back-arrow">◀</span>
+        <span>VOLVER</span>
+    </a>
+    
+    <!-- CONTENIDO -->
+    <div class="auralis-layout">
+        
+        <!-- LISTA IZQUIERDA -->
+        <aside class="auralis-list">
+            <h2 class="list-title">AURALIS</h2>
+            <ul class="pokemon-list">
+                <li class="pokemon-item selected" data-pokemon="brakos">
+                    <span class="cursor">▶</span>
+                    <span class="p-icon">🪨</span>
+                    <span class="p-name">Brakos</span>
+                </li>
+                <li class="pokemon-item" data-pokemon="zappik">
+                    <span class="cursor">▶</span>
+                    <span class="p-icon">⚡</span>
+                    <span class="p-name">Zappik</span>
+                </li>
+                <li class="pokemon-item" data-pokemon="leafu">
+                    <span class="cursor">▶</span>
+                    <span class="p-icon">🌿</span>
+                    <span class="p-name">Leafu</span>
+                </li>
+                <li class="pokemon-item" data-pokemon="flamiki">
+                    <span class="cursor">▶</span>
+                    <span class="p-icon">🔥</span>
+                    <span class="p-name">Flamiki</span>
+                </li>
+                <li class="pokemon-item" data-pokemon="bublo">
+                    <span class="cursor">▶</span>
+                    <span class="p-icon">💧</span>
+                    <span class="p-name">Bublo</span>
+                </li>
+                <li class="pokemon-item" data-pokemon="veylo">
+                    <span class="cursor">▶</span>
+                    <span class="p-icon">🌪️</span>
+                    <span class="p-name">Veylo</span>
+                </li>
+            </ul>
+        </aside>
+        
+        <!-- CARTA DERECHA -->
+        <main class="card-zone">
+            <div class="card-scene">
+                <div class="card" id="pokemon-card">
+                    
+                    <!-- CARA FRONTAL -->
+                    <div class="card-face card-front">
+                        <div class="card-frame">
+                            <div class="card-header-bar">
+                                <span class="card-name" id="front-name">Brakos</span>
+                                <span class="card-hp">HP 100</span>
+                            </div>
+                            
+                            <div class="card-image-box">
+                                <img id="front-sprite" src="assets/img/brakos.png" alt="Brakos" onerror="this.style.display='none'; this.parentNode.classList.add('no-sprite');">
+                                <div class="sprite-placeholder" id="front-placeholder">🪨</div>
+                            </div>
+                            
+                            <div class="card-type-bar">
+                                <span class="card-type-label">TIPO</span>
+                                <span class="card-type-value" id="front-type">Tierra / Lucha</span>
+                            </div>
+                            
+                            <div class="card-flip-hint">▼ CLICK PARA GIRAR ▼</div>
+                        </div>
+                    </div>
+                    
+                    <!-- CARA TRASERA -->
+                    <div class="card-face card-back">
+                        <div class="card-frame">
+                            <div class="card-header-bar back-header">
+                                <img class="mini-sprite" id="back-sprite" src="assets/img/brakos.png" alt="Brakos" onerror="this.style.display='none'; this.parentNode.classList.add('no-sprite');">
+                                <div class="back-title">
+                                    <span class="card-name" id="back-name">Brakos</span>
+                                    <span class="card-type-small" id="back-type">Tierra / Lucha</span>
+                                </div>
+                            </div>
+                            
+                            <div class="back-stats">
+                                <div class="stat"><span class="stat-label">TIPO</span><span class="stat-value" id="back-stat-type">Tierra/Lucha</span></div>
+                                <div class="stat"><span class="stat-label">ROL</span><span class="stat-value" id="back-stat-role">Físico</span></div>
+                                <div class="stat"><span class="stat-label">FUERZA</span><span class="stat-value" id="back-stat-power">★★★★☆</span></div>
+                            </div>
+                            
+                            <p class="back-description" id="back-description">
+                                Fuerte y resistente. Especialista en golpes físicos.
+                            </p>
+                            
+                            <div class="back-habilities">
+                                <h3>HABILIDADES</h3>
+                                <ul id="back-habilities-list">
+                                    <li><strong>Pisotón</strong> Daña y puede aturdir</li>
+                                    <li><strong>Terremoto</strong> Daño en área</li>
+                                    <li><strong>Coraza</strong> Barrera protectora</li>
+                                    <li><strong>Núcleo Terrestre</strong> Potencia Tierra</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="card-flip-hint back-hint">▲ CLICK PARA VOLVER ▲</div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </main>
+        
+    </div>
+    
+    <!-- COPYRIGHT -->
+    <div class="copyright">© 2026 Auralis Team · v1.0</div>
+    
+    <script src="js/main.js"></script>
+</body>
+</html>
