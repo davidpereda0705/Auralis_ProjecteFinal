@@ -1,0 +1,212 @@
+/* ============================================================
+   AURALIS - ESTILOS BASE (común a todas las páginas)
+   ============================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+/* ============================================================
+   VARIABLES
+   ============================================================ */
+:root {
+    --sky-blue:     #7ec4e8;
+    --sky-light:    #a8dcf0;
+    --grass-green:  #5cb85c;
+    --grass-dark:   #3a7a3a;
+    --dirt-brown:   #a0673f;
+    --dirt-light:   #c89464;
+    --rock-gray:    #8a8a8a;
+    
+    --ui-border:    #1c3a6e;
+    --ui-border-lt: #2e5b9e;
+    --ui-box:       #f8f8f0;
+    --ui-shadow:    #0f2342;
+    
+    --text-dark:    #1c3a6e;
+    --text-mid:     #4a6a9e;
+    --text-white:   #ffffff;
+    
+    --yellow:       #ffd93d;
+    --yellow-dark:  #d4ae00;
+    --red:          #e63946;
+    --red-dark:     #b3252f;
+    
+    --tierra:    #c08c3f;
+    --electrico: #f7d02c;
+    --planta:    #4dc04d;
+    --fuego:     #ee8130;
+    --agua:      #4a90e2;
+    --aire:      #9ec8e8;
+}
+
+/* ============================================================
+   CURSOR PIXELADO
+   ============================================================ */
+body {
+    font-family: 'Press Start 2P', monospace;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M4 2 L4 20 L9 15 L13 22 L15 21 L11 14 L18 14 Z' fill='%23ffffff' stroke='%231c3a6e' stroke-width='2'/%3E%3C/svg%3E") 4 2, auto;
+}
+
+/* ============================================================
+   FONDO DEL MUNDO
+   ============================================================ */
+.world-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    background: url('../assets/img/world-bg.png') center/cover no-repeat;
+}
+
+/* ============================================================
+   NUBES ANIMADAS
+   ============================================================ */
+.cloud {
+    position: absolute;
+    background: #ffffff;
+    border-radius: 50px;
+    opacity: 0.85;
+    filter: drop-shadow(0 4px 0 rgba(126, 196, 232, 0.4));
+    pointer-events: none;
+}
+
+.cloud::before,
+.cloud::after {
+    content: "";
+    position: absolute;
+    background: #ffffff;
+    border-radius: 50%;
+}
+
+.cloud-1 { top: 8%; left: -200px; width: 160px; height: 45px; animation: drift 45s linear infinite; }
+.cloud-1::before { width: 70px; height: 70px; top: -35px; left: 25px; }
+.cloud-1::after  { width: 55px; height: 55px; top: -25px; left: 80px; }
+
+.cloud-2 { top: 15%; left: -250px; width: 120px; height: 35px; opacity: 0.75; animation: drift 35s linear infinite; animation-delay: -10s; }
+.cloud-2::before { width: 55px; height: 55px; top: -28px; left: 20px; }
+.cloud-2::after  { width: 45px; height: 45px; top: -20px; left: 60px; }
+
+.cloud-3 { top: 22%; left: -180px; width: 100px; height: 30px; opacity: 0.65; animation: drift 28s linear infinite; animation-delay: -5s; }
+.cloud-3::before { width: 45px; height: 45px; top: -22px; left: 15px; }
+.cloud-3::after  { width: 38px; height: 38px; top: -16px; left: 50px; }
+
+.cloud-4 { top: 30%; left: -220px; width: 180px; height: 50px; opacity: 0.8; animation: drift 55s linear infinite; animation-delay: -20s; }
+.cloud-4::before { width: 80px; height: 80px; top: -40px; left: 30px; }
+.cloud-4::after  { width: 60px; height: 60px; top: -28px; left: 95px; }
+
+.cloud-5 { top: 5%; left: -150px; width: 90px; height: 28px; opacity: 0.7; animation: drift 40s linear infinite; animation-delay: -30s; }
+.cloud-5::before { width: 40px; height: 40px; top: -20px; left: 12px; }
+.cloud-5::after  { width: 32px; height: 32px; top: -14px; left: 45px; }
+
+.cloud-6 { top: 38%; left: -240px; width: 200px; height: 55px; opacity: 0.55; animation: drift 65s linear infinite; animation-delay: -45s; }
+.cloud-6::before { width: 90px; height: 90px; top: -45px; left: 35px; }
+.cloud-6::after  { width: 70px; height: 70px; top: -32px; left: 110px; }
+
+@keyframes drift {
+    from { transform: translateX(0); }
+    to   { transform: translateX(calc(100vw + 300px)); }
+}
+
+/* ============================================================
+   OVERLAY DE DESTELLO
+   ============================================================ */
+.flash-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #ffffff;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 999;
+    transition: opacity 0.05s ease-out;
+}
+
+.flash-overlay.active {
+    opacity: 0.6;
+    transition: opacity 0s;
+}
+
+/* ============================================================
+   BOTÓN VOLVER
+   ============================================================ */
+.back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 1.4rem;
+    background: #f8f8f0;
+    border: 4px solid var(--ui-border);
+    border-radius: 8px;
+    box-shadow: 
+        0 5px 0 var(--ui-shadow),
+        0 8px 15px rgba(0,0,0,0.3);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.75rem;
+    color: var(--ui-border);
+    text-decoration: none;
+    letter-spacing: 2px;
+    transition: all 0.15s;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    background: var(--yellow);
+    transform: translateY(2px);
+    box-shadow: 
+        0 3px 0 var(--ui-shadow),
+        0 5px 12px rgba(0,0,0,0.3);
+}
+
+.back-btn .back-arrow {
+    color: var(--red);
+    font-size: 0.9rem;
+    animation: back-arrow-bounce 0.8s ease-in-out infinite;
+}
+
+@keyframes back-arrow-bounce {
+    0%, 100% { transform: translateX(0); }
+    50%      { transform: translateX(-4px); }
+}
+
+/* ============================================================
+   COPYRIGHT
+   ============================================================ */
+.copyright {
+    position: fixed;
+    bottom: 12px;
+    left: 16px;
+    z-index: 5;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.55rem;
+    color: #ffffff;
+    letter-spacing: 1px;
+    text-shadow: 
+        2px 2px 0 var(--ui-border),
+        3px 3px 0 var(--ui-shadow);
+}
+
+/* ============================================================
+   RESPONSIVE BASE
+   ============================================================ */
+@media (max-width: 600px) {
+    .back-btn {
+        padding: 0.7rem 1rem;
+        font-size: 0.6rem;
+    }
+    .copyright { font-size: 0.45rem; }
+}
