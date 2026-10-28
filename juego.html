@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auralis: El Despertar - Mundo</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/juego.css">
+</head>
+<body class="juego-page">
+    
+    <!-- VIEWPORT: Ocupa toda la pantalla y recorta lo que se salga -->
+    <div id="game-viewport">
+        <!-- EL MUNDO: Aquí va el mapa y las entidades. Se mueve con JS -->
+        <div id="game-world">
+            <div id="map-layer"></div>
+            <div id="entities-layer"></div>
+        </div>
+    </div>
+
+    <!-- HUD SUPERIOR -->
+    <div id="hud">
+        <div class="hud-item">
+            <span class="hud-label">OBJETIVO</span>
+            <span class="hud-value">Encuentra a los Auralis</span>
+        </div>
+    </div>
+
+    <!-- MENÚ DE COMBATE (Oculto por defecto) -->
+    <div id="battle-overlay" class="hidden">
+        <div class="battle-box">
+            <h2 id="battle-title">¡Un Auralis Salvaje!</h2>
+            <div id="battle-sprite" class="sprite-float">⚡</div>
+            <p id="battle-text">¿Quieres luchar contra este Auralis?</p>
+            <div class="battle-actions">
+                <button id="btn-fight" class="action-btn">¡LUCHAR!</button>
+                <button id="btn-run" class="action-btn btn-red">HUIR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE VICTORIA -->
+    <div id="victory-overlay" class="hidden">
+        <div class="victory-box">
+            <h1>¡VICTORIA!</h1>
+            <p>Has derrotado al Auralis salvaje.</p>
+            <button id="btn-return-menu" class="action-btn btn-blue">VOLVER AL MENÚ</button>
+        </div>
+    </div>
+
+    <!-- COPYRIGHT -->
+    <div class="copyright">© 2026 Auralis Team · v1.0</div>
+    
+    <!-- Script -->
+    <script src="js/juego.js"></script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+/* ============================================================
+   AURALIS - MUNDO ESTILO POKÉMON BLANCO/NEGRO (DS)
+   ============================================================ */
+
+.juego-page {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #2c3e50; /* Fondo oscuro exterior */
+    font-family: 'Press Start 2P', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ============================================================
+   CONTENEDOR DEL MAPA (La pantalla de la DS)
+   ============================================================ */
+#game-viewport {
+    position: relative;
+    /* Mapa de 10x10 celdas de 36px = 360px */
+    width: 432px; /* 12 * 36 */
+    height: 432px;
+    background: #5cb85c;
+    border: 6px solid #1c3a6e;
+    border-radius: 4px;
+    box-shadow: 
+        0 0 0 3px #0f2342,
+        0 15px 30px rgba(0,0,0,0.6);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-world {
+    position: relative;
+    width: 432px;
+    height: 432px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr); /* 12 columnas */
+    grid-template-rows: repeat(12, 1fr);    /* 12 filas */
+}
+/* ============================================================
+   CELDAS DEL MAPA
+   ============================================================ */
+.map-cell {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* Sombra sutil en el borde de cada celda para simular relieve */
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+}
+
+.map-cell.grass { background: #5cb85c; }
+.map-cell.path { background: #d4a373; }
+.map-cell.water { background: #4a90e2; }
+.map-cell.rock { background: #8a8a8a; }
+
+/* Árboles: sprite alto con sombra */
+.map-cell.tree {
+    background: #5cb85c;
+}
+.map-cell.tree::before {
+    content: "🌲";
+    position: absolute;
+    font-size: 2.8rem;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -60%); /* Lo subimos un poco para que parezca alto */
+    filter: drop-shadow(4px 6px 0 rgba(0,0,0,0.4)); /* Sombra dura */
+    z-index: 2;
+}
+
+/* Rocas: sprite con sombra */
+.map-cell.rock {
+    background: #5cb85c;
+}
+.map-cell.rock::before {
+    content: "🪨";
+    position: absolute;
+    font-size: 2rem;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(3px 4px 0 rgba(0,0,0,0.4));
+    z-index: 2;
+}
+
+/* Agua: animación sutil */
+.map-cell.water::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%);
+    animation: water-shimmer 3s infinite;
+}
+@keyframes water-shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* ============================================================
+   ENTIDADES: JUGADOR Y AURALIS
+   ============================================================ */
+#entities-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Jugador: sprite con sombra, sin flotar */
+.player-sprite {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    transition: left 0.12s ease-out, top 0.12s ease-out;
+    /* Sombra dura en el suelo */
+    filter: drop-shadow(0 8px 3px rgba(0,0,0,0.5));
+    /* El emoji se ve de frente */
+}
+
+/* Auralis: flotando (porque son criaturas mágicas) */
+.auralis-sprite {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    z-index: 15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    /* Sombra para dar profundidad */
+    filter: drop-shadow(0 10px 4px rgba(0,0,0,0.5));
+    animation: float-sprite 2s ease-in-out infinite;
+}
+
+@keyframes float-sprite {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+/* ============================================================
+   HUD SUPERIOR
+   ============================================================ */
+#hud {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    background: #f8f8f0;
+    border: 4px solid #1c3a6e;
+    border-radius: 8px;
+    padding: 8px 16px;
+    box-shadow: 0 5px 0 #0f2342;
+    text-align: center;
+}
+
+.hud-label {
+    font-size: 0.5rem;
+    color: #e63946;
+    display: block;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+}
+
+.hud-value {
+    font-size: 0.65rem;
+    color: #1c3a6e;
+}
+
+/* ============================================================
+   OVERLAYS (Combate y Victoria)
+   ============================================================ */
+#battle-overlay,
+#victory-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden { display: none !important; }
+
+.battle-box, .victory-box {
+    background: #f8f8f0;
+    border: 6px solid #1c3a6e;
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 10px 0 #0f2342;
+    max-width: 400px;
+    width: 90%;
+    animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+#battle-title {
+    font-size: 1rem;
+    color: #1c3a6e;
+    margin-bottom: 20px;
+}
+
+#battle-sprite {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    display: inline-block;
+    filter: drop-shadow(0 8px 4px rgba(0,0,0,0.3));
+}
+
+.sprite-float { animation: float-sprite 1.5s infinite; }
+
+#battle-text {
+    font-family: 'VT323', monospace;
+    font-size: 1.5rem;
+    color: #1c3a6e;
+    margin-bottom: 30px;
+}
+
+.battle-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.action-btn {
+    background: #4cd964;
+    border: 4px solid #1c3a6e;
+    border-radius: 8px;
+    padding: 15px 20px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.8rem;
+    color: #1c3a6e;
+    box-shadow: 0 5px 0 #0f2342;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.action-btn:hover {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 #0f2342;
+    background: #ffd93d;
+}
+
+.btn-red { background: #e63946; color: white; }
+.btn-blue { background: #4a90e2; color: white; }
+
+.victory-box h1 {
+    font-size: 2rem;
+    color: #ffd93d;
+    text-shadow: 2px 2px 0 #1c3a6e, 4px 4px 0 #0f2342;
+    margin-bottom: 20px;
+}
+
+.victory-box p {
+    font-family: 'VT323', monospace;
+    font-size: 1.5rem;
+    color: #1c3a6e;
+    margin-bottom: 30px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    #game-viewport { width: 90vw; height: 90vw; max-width: 400px; max-height: 400px; }
+    #game-world { width: 100%; height: 100%; }
+    .battle-box, .victory-box { padding: 20px; }
+    .action-btn { font-size: 0.7rem; padding: 12px; }
+}
