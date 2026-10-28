@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auralis: El Despertar - Opciones</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/opciones.css">
+</head>
+<body class="opciones-page">
+    
+    <!-- FONDO DEL MUNDO -->
+    <div class="world-bg">
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="cloud cloud-4"></div>
+        <div class="cloud cloud-5"></div>
+        <div class="cloud cloud-6"></div>
+    </div>
+    
+    <!-- OVERLAY DE DESTELLO -->
+    <div class="flash-overlay"></div>
+    
+    <!-- BOTÓN VOLVER -->
+    <a href="index.html" class="back-btn">
+        <span class="back-arrow">◀</span>
+        <span>VOLVER</span>
+    </a>
+    
+    <!-- CONTENIDO -->
+    <div class="opciones-container">
+        
+        <h1 class="page-title">OPCIONES</h1>
+        <p class="page-subtitle">Ajusta la experiencia a tu gusto</p>
+        
+        <div class="options-box">
+            
+            <!-- OPCIÓN 1: VOLUMEN -->
+            <div class="option-row">
+                <div class="option-label">
+                    <span class="opt-icon">🔊</span>
+                    <span>Volumen</span>
+                </div>
+                <div class="option-control">
+                    <input type="range" id="opt-volume" min="0" max="100" value="50" class="slider">
+                    <span class="slider-value" id="volume-value">50</span>
+                </div>
+            </div>
+            
+            <!-- OPCIÓN 2: VELOCIDAD DE TEXTO -->
+            <div class="option-row">
+                <div class="option-label">
+                    <span class="opt-icon">📝</span>
+                    <span>Velocidad de Texto</span>
+                </div>
+                <div class="option-control">
+                    <div class="segmented-control" id="opt-text-speed">
+                        <button class="seg-btn" data-value="slow">LENTO</button>
+                        <button class="seg-btn active" data-value="normal">NORMAL</button>
+                        <button class="seg-btn" data-value="fast">RÁPIDO</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- OPCIÓN 3: EFECTOS VISUALES -->
+            <div class="option-row">
+                <div class="option-label">
+                    <span class="opt-icon">✨</span>
+                    <span>Efectos Visuales</span>
+                </div>
+                <div class="option-control">
+                    <div class="toggle-switch" id="opt-visuals" data-state="on">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- OPCIÓN 4: SONIDOS DE INTERFAZ -->
+            <div class="option-row">
+                <div class="option-label">
+                    <span class="opt-icon">🎵</span>
+                    <span>Sonidos de Interfaz</span>
+                </div>
+                <div class="option-control">
+                    <div class="toggle-switch" id="opt-sounds" data-state="on">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <p class="save-hint">Los cambios se guardan automáticamente.</p>
+        
+        <div class="cta-final">
+            <a href="index.html" class="btn-play">VOLVER AL MENÚ</a>
+        </div>
+        
+    </div>
+    
+    <!-- COPYRIGHT -->
+    <div class="copyright">© 2026 Auralis Team · v1.0</div>
+    
+    <script src="js/main.js"></script>
+</body>
+</html>

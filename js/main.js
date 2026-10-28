@@ -350,4 +350,86 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================================
     document.addEventListener('click', () => getAudioCtx(), { once: true });
     document.addEventListener('keydown', () => getAudioCtx(), { once: true });
+    
+        // ============================================================
+    // LÓGICA DE LA PÁGINA DE OPCIONES (opciones.html)
+    // ============================================================
+    const optionsBox = document.querySelector('.options-box');
+    
+    if (optionsBox) {
+        // 1. Cargar valores guardados en localStorage
+        const defaultOptions = {
+            volume: 50,
+            textSpeed: 'normal',
+            visuals: 'on',
+            sounds: 'on'
+        };
+        
+        let currentOptions = JSON.parse(localStorage.getItem('auralis_options')) || defaultOptions;
+        
+        // Guardar opciones
+        function saveOptions() {
+            localStorage.setItem('auralis_options', JSON.stringify(currentOptions));
+        }
+        
+        // ==========================================
+        // VOLUMEN
+        // ==========================================
+        const volumeSlider = document.getElementById('opt-volume');
+        const volumeValue = document.getElementById('volume-value');
+        
+        if (volumeSlider) {
+            volumeSlider.value = currentOptions.volume;
+            volumeValue.textContent = currentOptions.volume;
+            
+            volumeSlider.addEventListener('input', (e) => {
+                const val = e.target.value;
+                volumeValue.textContent = val;
+                currentOptions.volume = parseInt(val);
+                saveOptions();
+            });
+        }
+        
+        // ==========================================
+        // VELOCIDAD DE TEXTO
+        // ==========================================
+        const speedBtns = document.querySelectorAll('#opt-text-speed .seg-btn');
+        
+        if (speedBtns.length > 0) {
+            // Marcar el activo inicial
+            speedBtns.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.value === currentOptions.textSpeed);
+                
+                btn.addEventListener('click', () => {
+                    speedBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentOptions.textSpeed = btn.dataset.value;
+                    saveOptions();
+                    playClickSound();
+                });
+            });
+        }
+        
+        // ==========================================
+        // TOGGLES (Visuales y Sonidos)
+        // ==========================================
+        function setupToggle(elementId, optionKey) {
+            const toggle = document.getElementById(elementId);
+            if (!toggle) return;
+            
+            toggle.dataset.state = currentOptions[optionKey];
+            
+            toggle.addEventListener('click', () => {
+                const currentState = toggle.dataset.state;
+                const newState = currentState === 'on' ? 'off' : 'on';
+                toggle.dataset.state = newState;
+                currentOptions[optionKey] = newState;
+                saveOptions();
+                playClickSound();
+            });
+        }
+        
+        setupToggle('opt-visuals', 'visuals');
+        setupToggle('opt-sounds', 'sounds');
+    }
 });
