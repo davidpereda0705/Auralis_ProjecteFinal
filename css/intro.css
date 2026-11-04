@@ -1,0 +1,128 @@
+/* ============================================================
+   AURALIS - INTRODUCCIÓN (historia-intro.html)
+   ============================================================ */
+
+.intro-page {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: #0a0a0a; /* Negro profundo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'VT323', monospace;
+    overflow: hidden;
+}
+
+/* Un sutil patrón de cuadrícula de fondo para que no sea aburrido */
+.intro-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+}
+
+#intro-container {
+    position: relative;
+    z-index: 10;
+    width: 90%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+/* Caja de texto */
+#intro-text-box {
+    background: rgba(15, 35, 66, 0.9);
+    border: 4px solid #ffd93d;
+    border-radius: 8px;
+    padding: 40px;
+    box-shadow: 0 0 30px rgba(255, 217, 61, 0.3);
+    min-height: 250px;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#intro-text {
+    font-size: 2rem;
+    color: #ffffff;
+    line-height: 1.4;
+    white-space: pre-wrap; /* Respeta los saltos de línea */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+#intro-cursor {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    color: #ffd93d;
+    font-size: 1.5rem;
+    animation: blink 1s infinite;
+}
+
+.hidden { display: none !important; }
+
+@keyframes blink {
+    0%, 100% { opacity: 1; transform: translateY(0); }
+    50% { opacity: 0; transform: translateY(4px); }
+}
+
+/* Botones */
+#btn-skip {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.6rem;
+    padding: 10px 15px;
+    background: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#btn-skip:hover {
+    background: #ffffff;
+    color: #000;
+}
+
+#btn-continue {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1.2rem;
+    padding: 20px 40px;
+    background: #4cd964;
+    color: #1c3a6e;
+    border: 4px solid #1c3a6e;
+    border-radius: 8px;
+    box-shadow: 0 6px 0 #0f2342;
+    cursor: pointer;
+    animation: pulse-continue 2s infinite;
+}
+
+#btn-continue:hover {
+    background: #ffd93d;
+    transform: translateY(3px);
+    box-shadow: 0 3px 0 #0f2342;
+}
+
+@keyframes pulse-continue {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    #intro-text { font-size: 1.4rem; }
+    #intro-text-box { padding: 25px; min-height: 200px; }
+    #btn-continue { font-size: 0.9rem; padding: 15px 25px; }
+}
