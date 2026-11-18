@@ -14,24 +14,26 @@
 </head>
 <body class="juego-page">
     
-    <!-- VIEWPORT: Ocupa toda la pantalla y recorta lo que se salga -->
+    <!-- CONTENEDOR 3D -->
     <div id="game-viewport">
-        <!-- EL MUNDO: Aquí va el mapa y las entidades. Se mueve con JS -->
-        <div id="game-world">
-            <div id="map-layer"></div>
-            <div id="entities-layer"></div>
-        </div>
+        <canvas id="three-canvas"></canvas>
     </div>
 
     <!-- HUD SUPERIOR -->
     <div id="hud">
         <div class="hud-item">
             <span class="hud-label">OBJETIVO</span>
-            <span class="hud-value">Encuentra a los Auralis</span>
+            <span class="hud-value">Encuentra al Maestro del Domo</span>
         </div>
     </div>
 
-    <!-- MENÚ DE COMBATE (Oculto por defecto) -->
+    <!-- CAJA DE DIÁLOGO -->
+    <div id="caja-dialogo" class="hidden">
+        <span class="texto-dialogo"></span>
+        <div class="dialogo-hint">[E] continuar</div>
+    </div>
+
+    <!-- MENÚ DE COMBATE (se mantiene para más adelante) -->
     <div id="battle-overlay" class="hidden">
         <div class="battle-box">
             <h2 id="battle-title">¡Un Auralis Salvaje!</h2>
@@ -55,8 +57,12 @@
 
     <!-- COPYRIGHT -->
     <div class="copyright">© 2026 Auralis Team · v1.0</div>
-    
-    <!-- Script -->
+
+    <!-- THREE.JS PRIMERO -->
+    <script src="js/three.min.js"></script>
+    <!-- MAIN (audio global) -->
+    <script src="js/main.js"></script>
+    <!-- LÓGICA DEL JUEGO 3D -->
     <script src="js/juego.js"></script>
 </body>
 </html>
