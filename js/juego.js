@@ -181,7 +181,8 @@ document.addEventListener('DOMContentLoaded', () => {
         scene.add(tejado);
 
         const geoPuerta = new THREE.BoxGeometry(0.7, 1.0, 0.08);
-        const matPuerta = new THREE.MeshLambertMaterial({ color: 0x5d4037 });
+                const colorPuerta = (ed.id === 'laboratorio' && localStorage.getItem('auralis_elegido_nombre')) ? 0x4caf50 : 0x5d4037;
+        const matPuerta = new THREE.MeshLambertMaterial({ color: colorPuerta });
         const puerta = new THREE.Mesh(geoPuerta, matPuerta);
         puerta.position.set(cx, 0.5, cz + altoZ / 2 + 0.04);
         scene.add(puerta);
@@ -352,10 +353,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function crearMatojo(x, z) {
         const grupo = new THREE.Group();
-        
+
         // Color verde brillante para que destaque
-        const matHierba = new THREE.MeshLambertMaterial({ color: 0x2e7d32 }); 
-        
+        const matHierba = new THREE.MeshLambertMaterial({ color: 0x2e7d32 });
+
         // Hacemos 4 conos para dar sensación de densidad
         const c1 = new THREE.Mesh(new THREE.ConeGeometry(0.25, 0.6, 5), matHierba);
         c1.position.y = 0.3;
@@ -382,7 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         grupo.position.set(x, 0, z);
         scene.add(grupo);
-        
+
         zonaHierbajos.push(grupo);
     }
 
@@ -399,7 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const matSueloAlto = new THREE.MeshLambertMaterial({ map: texturaCesped });
         const sueloAlto = new THREE.Mesh(geoSueloAlto, matSueloAlto);
         sueloAlto.rotation.x = -Math.PI / 2;
-        sueloAlto.position.set(centroX, 0.05, centroZ); 
+        sueloAlto.position.set(centroX, 0.05, centroZ);
         sueloAlto.receiveShadow = true;
         scene.add(sueloAlto);
 
@@ -408,7 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let z = minZ + 0.4; z < maxZ; z += 0.7) {
                 const offsetX = (Math.random() - 0.5) * 0.3;
                 const offsetZ = (Math.random() - 0.5) * 0.3;
-                
+
                 // Dejamos algunos huecos aleatorios
                 if (Math.random() > 0.15) {
                     crearMatojo(x + offsetX, z + offsetZ);
@@ -419,7 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. Creamos las DOS zonas (dejando un hueco central para el camino)
     // El camino vertical está en X=11.5 (de 10.5 a 12.5)
-    
+
     // Zona Izquierda: se expande hacia la izquierda (desde X=4 hasta X=10.3)
     crearZonaHierba(4, 10.3, 7.5, 11.5);
 
@@ -476,6 +477,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const dz = jugador.position.z - maestro.position.z;
         return Math.sqrt(dx * dx + dz * dz) < 1.8;
     }
+    function estaEnPuertaLaboratorio() {
+        // El laboratorio está en X=6, Y=2.5. Su puerta está en el centro de su base.
+        const puertaX = 6 + 1.5; // Centro del ancho (3/2)
+        const puertaZ = 5.5;     // Base del edificio
+
+        const dx = jugador.position.x - puertaX;
+        const dz = jugador.position.z - puertaZ;
+        return Math.sqrt(dx * dx + dz * dz) < 1.0; // Si está a menos de 1 metro
+    }
 
     function abrirDialogo() {
         dialogoAbierto = true;
@@ -503,12 +513,85 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    let cooldownPuerta = false;
+
     window.addEventListener('keydown', (e) => {
         if (e.key.toLowerCase() !== 'e') return;
+        if (cooldownPuerta) return;
+
         if (dialogoAbierto) {
             avanzarDialogo();
-        } else if (estaCercaDelMaestro()) {
-            abrirDialogo();
+        }
+        else if (enInterior) {
+            // 1. ¿Estamos cerca de una Auraball?
+            const ballIndex = obtenerAuraballCercana();
+
+            if (ballIndex !== -1) {
+                // ¡Hemos elegido una Auraball!
+                if (window.playSelectSound) window.playSelectSound();
+
+                // Obtenemos los datos reales de la bola que hemos tocado
+                const bolaElegida = auralisInterior[ballIndex].userData;
+
+                // Guardamos la elección en el navegador
+                localStorage.setItem('auralis_elegido_id', bolaElegida.id);
+                localStorage.setItem('auralis_elegido_nombre', bolaElegida.nombre);
+
+                // Mostramos el diálogo
+                const caja = document.getElementById('caja-dialogo');
+                caja.classList.remove('hidden');
+                caja.querySelector('.texto-dialogo').innerText =
+                    `¡Has elegido a ${bolaElegida.nombre}! Vuelve al exterior para comenzar tu aventura.`;
+
+                // Después de 2.5 segundos, volvemos al exterior
+                setTimeout(() => {
+                    caja.classList.add('hidden');
+                    enInterior = false;
+                    jugador.position.z = 7.5;
+                    if (window.playClickSound) window.playClickSound();
+                }, 2500);
+            }
+            // 2. Si no hay bola cerca, ¿estamos en la puerta de salida?
+            else if (typeof estaEnPuertaSalida === 'function' && estaEnPuertaSalida()) {
+                if (window.playSelectSound) window.playSelectSound();
+                enInterior = false;
+                jugador.position.z = 7.5; // Aparecer fuera
+                cooldownPuerta = true;
+                setTimeout(() => { cooldownPuerta = false; }, 500);
+            }
+        }
+        else {
+            // Estamos en el exterior
+            if (estaCercaDelMaestro()) {
+                abrirDialogo();
+            } else if (estaEnPuertaLaboratorio()) {
+                // Comprobar si ya tiene un Auralis elegido
+                const auralisGuardado = localStorage.getItem('auralis_elegido_nombre');
+
+                if (auralisGuardado) {
+                    // Ya tiene uno, mostramos mensaje y no entramos
+                    if (window.playBeep) window.playBeep(220, 0.2, 'square', 0.05); // Sonido de error
+
+                    const caja = document.getElementById('caja-dialogo');
+                    caja.classList.remove('hidden');
+                    caja.querySelector('.texto-dialogo').innerText =
+                        `Ya has elegido a ${auralisGuardado}. ¡Solo puedes tener un Auralis inicial!`;
+
+                    // Ocultamos el mensaje a los 3 segundos
+                    setTimeout(() => {
+                        caja.classList.add('hidden');
+                    }, 3000);
+
+                    cooldownPuerta = true;
+                    setTimeout(() => { cooldownPuerta = false; }, 500);
+                } else {
+                    // No tiene Auralis, puede entrar
+                    if (window.playSelectSound) window.playSelectSound();
+                    crearInteriorLaboratorio();
+                    cooldownPuerta = true;
+                    setTimeout(() => { cooldownPuerta = false; }, 500);
+                }
+            }
         }
     });
 
@@ -520,6 +603,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function animar() {
         requestAnimationFrame(animar);
         const dt = Math.min(clock.getDelta(), 0.1);
+
+        if (juegoPausado) {
+            return;
+        }
 
         if (!dialogoAbierto) {
             let dx = 0, dz = 0;
@@ -559,7 +646,38 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        renderer.render(scene, camara);
+        if (enInterior) {
+            let idx = 0, idz = 0;
+            if (teclas.w || teclas.arrowup) idz -= 1;
+            if (teclas.s || teclas.arrowdown) idz += 1;
+            if (teclas.a || teclas.arrowleft) idx -= 1;
+            if (teclas.d || teclas.arrowright) idx += 1;
+
+            moverJugadorInterior(idx, idz, dt);
+
+            // --- NUEVO: Resaltar la bola cercana ---
+            const ballIndex = obtenerAuraballCercana();
+            auralisInterior.forEach((b, i) => {
+                b.rotation.y += dt * 2;
+                // Si es la bola cercana, la hacemos grande temporalmente (efecto imán)
+                if (i === ballIndex) {
+                    b.scale.set(1.3, 1.3, 1.3);
+                } else {
+                    b.scale.set(1, 1, 1);
+                }
+            });
+            // ------------------------------------
+
+            renderer.render(escenaInterior, camaraInterior);
+        } else {
+            // Lógica de movimiento exterior (si no hay diálogo)
+            if (!dialogoAbierto) {
+                let dx = 0, dz = 0;
+                // ... (tu lógica de movimiento del exterior) ...
+            }
+            // Animaciones del exterior (nubes, etc)
+            renderer.render(scene, camara);
+        }
     }
 
     animar();
@@ -595,6 +713,61 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnReturnMenu) {
         btnReturnMenu.addEventListener('click', () => {
             window.location.href = 'index.html';
+        });
+    }
+
+        // ==========================================
+    // 12. MENÚ DE PAUSA (ESC)
+    // ==========================================
+    const menuPausa = document.getElementById('menu-pausa');
+    const btnPausaContinuar = document.getElementById('btn-pausa-continuar');
+    const btnPausaGuardar = document.getElementById('btn-pausa-guardar');
+    const btnPausaSalir = document.getElementById('btn-pausa-salir');
+    let juegoPausado = false;
+
+    // Abrir/Cerrar menú con ESC
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            juegoPausado = !juegoPausado;
+            if (juegoPausado) {
+                menuPausa.classList.remove('hidden');
+                if (window.playSelectSound) window.playSelectSound();
+            } else {
+                menuPausa.classList.add('hidden');
+                if (window.playClickSound) window.playClickSound();
+            }
+        }
+    });
+
+    // Botón: Continuar
+    if (btnPausaContinuar) {
+        btnPausaContinuar.addEventListener('click', () => {
+            juegoPausado = false;
+            menuPausa.classList.add('hidden');
+            if (window.playClickSound) window.playClickSound();
+        });
+    }
+
+    // Botón: Guardar y Salir
+    if (btnPausaGuardar) {
+        btnPausaGuardar.addEventListener('click', () => {
+            // Al estar guardado ya en localStorage cuando coges al Auralis,
+            // solo tenemos que irnos al menú.
+            if (window.playSelectSound) window.playSelectSound();
+            window.location.href = 'index.html';
+        });
+    }
+
+    // Botón: Salir sin guardar (Borra la partida actual)
+    if (btnPausaSalir) {
+        btnPausaSalir.addEventListener('click', () => {
+            const confirmar = confirm("¿Seguro que quieres salir SIN GUARDAR? Perderás tu progreso.");
+            if (confirmar) {
+                localStorage.removeItem('auralis_elegido_nombre');
+                localStorage.removeItem('auralis_elegido_id');
+                if (window.playClickSound) window.playClickSound();
+                window.location.href = 'index.html';
+            }
         });
     }
 });

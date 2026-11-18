@@ -57,12 +57,23 @@
 
     <!-- COPYRIGHT -->
     <div class="copyright">© 2026 Auralis Team · v1.0</div>
-
+        <!-- MENÚ DE PAUSA (ESC) -->
+    <div id="menu-pausa" class="hidden">
+        <div class="pausa-box">
+            <h1>PAUSA</h1>
+            <div class="pausa-botones">
+                <button id="btn-pausa-continuar" class="action-btn">CONTINUAR</button>
+                <button id="btn-pausa-guardar" class="action-btn btn-blue">GUARDAR Y SALIR</button>
+                <button id="btn-pausa-salir" class="action-btn btn-red">SALIR SIN GUARDAR</button>
+            </div>
+        </div>
+    </div>
     <!-- THREE.JS PRIMERO -->
     <script src="js/three.min.js"></script>
     <!-- MAIN (audio global) -->
     <script src="js/main.js"></script>
     <!-- LÓGICA DEL JUEGO 3D -->
+     <script src="js/interiores.js"></script>
     <script src="js/juego.js"></script>
 </body>
 </html>
