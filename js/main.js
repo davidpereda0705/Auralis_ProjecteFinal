@@ -52,7 +52,15 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) {}
     }
     function playClickSound() { playBeep(660, 0.08, 'square', 0.05); }
-    
+
+    // ============================================================
+    // PARCHE: exponer audio globalmente para juego.js / jugador.js
+    // ============================================================
+    window.playBeep          = playBeep;
+    window.playSelectSound   = playSelectSound;
+    window.playNavigateSound = playNavigateSound;
+    window.playClickSound    = playClickSound;
+
     // ============================================================
     // LÓGICA DE LA PANTALLA DE TÍTULO (index.html)
     // ============================================================
@@ -294,7 +302,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const keys = document.querySelectorAll('.key[data-key]');
 
     if (keys.length > 0) {
-        // Mapa de teclas especiales a nombres normalizados
         const KEY_MAP = {
             ' ': ' ',
             'Space': ' ',
@@ -336,7 +343,6 @@ document.addEventListener('DOMContentLoaded', () => {
             deactivateKey(norm);
         });
 
-        // Click en las teclas también las activa brevemente
         keys.forEach(k => {
             k.addEventListener('click', () => {
                 k.classList.add('active');
@@ -351,13 +357,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', () => getAudioCtx(), { once: true });
     document.addEventListener('keydown', () => getAudioCtx(), { once: true });
     
-        // ============================================================
+    // ============================================================
     // LÓGICA DE LA PÁGINA DE OPCIONES (opciones.html)
     // ============================================================
     const optionsBox = document.querySelector('.options-box');
     
     if (optionsBox) {
-        // 1. Cargar valores guardados en localStorage
         const defaultOptions = {
             volume: 50,
             textSpeed: 'normal',
@@ -367,14 +372,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         let currentOptions = JSON.parse(localStorage.getItem('auralis_options')) || defaultOptions;
         
-        // Guardar opciones
         function saveOptions() {
             localStorage.setItem('auralis_options', JSON.stringify(currentOptions));
         }
         
-        // ==========================================
-        // VOLUMEN
-        // ==========================================
         const volumeSlider = document.getElementById('opt-volume');
         const volumeValue = document.getElementById('volume-value');
         
@@ -390,13 +391,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         
-        // ==========================================
-        // VELOCIDAD DE TEXTO
-        // ==========================================
         const speedBtns = document.querySelectorAll('#opt-text-speed .seg-btn');
         
         if (speedBtns.length > 0) {
-            // Marcar el activo inicial
             speedBtns.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.value === currentOptions.textSpeed);
                 
@@ -410,9 +407,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         
-        // ==========================================
-        // TOGGLES (Visuales y Sonidos)
-        // ==========================================
         function setupToggle(elementId, optionKey) {
             const toggle = document.getElementById(elementId);
             if (!toggle) return;
