@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auralis: El Despertar - Partidas</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/opciones.css">
+    <style>
+        .slot-empty { text-align:center; font-family:'VT323',monospace; font-size:1.6rem; color:#1c3a6e; padding:1rem 0; }
+        .slot-name { font-family:'Press Start 2P',monospace; font-size:1rem; color:#1c3a6e; margin-bottom:1rem; }
+        .slot-stats { font-family:'VT323',monospace; font-size:1.5rem; color:#1c3a6e; display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:.3rem 1.5rem; margin-bottom:1rem; }
+        .slot-stats b { color:#e63946; }
+        .slot-team { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1.2rem; }
+        .slot-team span { font-family:'VT323',monospace; font-size:1.3rem; background:#1c3a6e; color:#fff; padding:.1rem .6rem; border-radius:4px; }
+        .slot-actions { display:flex; flex-wrap:wrap; gap:.8rem; justify-content:center; }
+        .slot-actions button, .slot-actions a { cursor:pointer; }
+        .btn-sec { background:#1c3a6e !important; text-shadow:2px 2px 0 #0f2342 !important; font-size:.65rem !important; padding:1rem 1.2rem !important; }
+        .btn-danger { background:#8a1c25 !important; }
+        .slot-msg { text-align:center; font-family:'VT323',monospace; font-size:1.4rem; color:#1c3a6e; min-height:1.6rem; margin-top:1rem; }
+    </style>
+</head>
+<body class="opciones-page">
+    
+    <!-- FONDO DEL MUNDO -->
+    <div class="world-bg">
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="cloud cloud-4"></div>
+        <div class="cloud cloud-5"></div>
+        <div class="cloud cloud-6"></div>
+    </div>
+    
+    <!-- OVERLAY DE DESTELLO -->
+    <div class="flash-overlay"></div>
+    <!-- BOTÓN VOLVER -->
+    <a href="index.html" class="back-btn">
+        <span class="back-arrow">◀</span>
+        <span>VOLVER</span>
+    </a>
+    
+    <!-- CONTENIDO -->
+    <div class="opciones-container">
+        
+        <h1 class="page-title">PARTIDAS</h1>
+        <p class="page-subtitle">Gestiona tu partida guardada</p>
+
+        <div class="options-box">
+            <div id="slot"></div>
+            <div class="slot-actions" style="margin-top:1rem">
+                <button class="btn-play btn-sec" id="btn-export">EXPORTAR ARCHIVO</button>
+                <button class="btn-play btn-sec" id="btn-import">IMPORTAR ARCHIVO</button>
+                <input type="file" id="file-import" accept=".json,application/json" hidden>
+            </div>
+            <div class="slot-msg" id="msg"></div>
+        </div>
+
+        <p class="save-hint">Dentro del juego puedes guardar con ENTER → GUARDAR. También se guarda tras combates y eventos importantes.</p>
+
+        <div class="cta-final">
+            <a href="index.html" class="btn-play">VOLVER AL MENÚ</a>
+        </div>
+    </div>
+
+    <div class="copyright">© 2026 Auralis Team · v1.0</div>
+
+    <script src="js/main.js"></script>
+    <script>
+    (function () {
+        const KEY = 'auralis_save_v1';
+        const $ = id => document.getElementById(id);
+        const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+        const msg = t => { $('msg').textContent = t; };
+        const read = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } };
+        const fmtTime = s => { s = Math.floor(s || 0); return Math.floor(s / 3600) + 'h ' + String(Math.floor(s % 3600 / 60)).padStart(2, '0') + 'm'; };
+
+        function render() {
+            const sv = read(), box = $('slot');
+            $('btn-export').disabled = !sv;
+            if (!sv) { box.innerHTML = '<div class="slot-empty">No hay ninguna partida guardada.</div><div class="slot-actions"><a class="btn-play" href="historia-intro.html">NUEVA PARTIDA</a></div>'; return; }
+            const team = (sv.party || []).map(m => '<span>' + esc(m.n || m.id) + ' Nv' + esc(m.lv) + '</span>').join('');
+            box.innerHTML =
+                '<div class="slot-name">' + esc(sv.name) + '</div>' +
+                '<div class="slot-stats">' +
+                '<div>Emblemas: <b>' + Object.keys(sv.emblems || {}).length + '/6</b></div>' +
+                '<div>Tiempo: <b>' + fmtTime(sv.time) + '</b></div>' +
+                '<div>Dinero: <b>' + (sv.money || 0) + '</b></div>' +
+                '<div>Auralis vistos: <b>' + Object.keys(sv.seen || {}).length + '</b></div>' +
+                '<div>Capturados: <b>' + Object.keys(sv.caught || {}).length + '</b></div></div>' +
+                '<div class="slot-team">' + (team || '<span>Sin equipo aún</span>') + '</div>' +
+                '<div class="slot-actions"><a class="btn-play" href="juego/index.html?continuar=1">CONTINUAR</a>' +
+                '<button class="btn-play btn-danger" id="btn-del">BORRAR</button></div>';
+            $('btn-del').onclick = function () {
+                if (this.dataset.sure) { localStorage.removeItem(KEY); msg('Partida borrada.'); render(); return; }
+                this.dataset.sure = 1; this.textContent = '¿SEGURO? PULSA DE NUEVO';
+            };
+        }
+
+        $('btn-export').onclick = () => {
+            const sv = localStorage.getItem(KEY); if (!sv) return;
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(new Blob([sv], { type: 'application/json' }));
+            a.download = 'auralis-partida.json'; a.click(); URL.revokeObjectURL(a.href);
+            msg('Partida exportada.');
+        };
+        $('btn-import').onclick = () => $('file-import').click();
+        $('file-import').onchange = e => {
+            const f = e.target.files[0]; if (!f) return;
+            const r = new FileReader();
+            r.onload = () => {
+                try {
+                    const d = JSON.parse(r.result);
+                    if (!d || typeof d.name !== 'string' || !Array.isArray(d.party) || !d.map) throw 0;
+                    if (read() && !confirm('Ya hay una partida guardada. ¿Sobrescribirla con el archivo?')) return;
+                    localStorage.setItem(KEY, JSON.stringify(d)); msg('Partida importada.'); render();
+                } catch (x) { msg('El archivo no es una partida válida.'); }
+            };
+            r.readAsText(f); e.target.value = '';
+        };
+        render();
+    })();
+    </script>
+</body>
+</html>
