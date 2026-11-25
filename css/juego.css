@@ -339,3 +339,45 @@
     0%, 100% { opacity: 1; }
     50%      { opacity: 0.3; }
 }
+/* ============================================================
+   MENÚ DE PAUSA
+   ============================================================ */
+#menu-pausa {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pausa-box {
+    background: #f8f8f0;
+    border: 6px solid #1c3a6e;
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 10px 0 #0f2342;
+    max-width: 400px;
+    width: 90%;
+}
+
+.pausa-box h1 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 2rem;
+    color: #1c3a6e;
+    margin-bottom: 30px;
+}
+
+.pausa-botones {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.pausa-botones .action-btn {
+    width: 100%;
+    font-size: 0.8rem;
+    padding: 15px;
+}

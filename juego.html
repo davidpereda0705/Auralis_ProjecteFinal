@@ -33,7 +33,14 @@
         <div class="dialogo-hint">[E] continuar</div>
     </div>
 
-    <!-- MENÚ DE COMBATE (se mantiene para más adelante) -->
+    <!-- BOTÓN VOLVER AL MENÚ -->
+    <div id="btn-volver-menu-juego" style="position: fixed; top: 20px; right: 20px; z-index: 999;">
+        <button style="background: #e63946; color: white; border: 4px solid #1c3a6e; border-radius: 8px; padding: 10px 20px; font-family: 'Press Start 2P', monospace; font-size: 0.7rem; cursor: pointer; box-shadow: 0 4px 0 #0f2342;" onclick="window.location.href='index.html'">
+            MENÚ
+        </button>
+    </div>
+
+    <!-- MENÚ DE COMBATE -->
     <div id="battle-overlay" class="hidden">
         <div class="battle-box">
             <h2 id="battle-title">¡Un Auralis Salvaje!</h2>
@@ -55,14 +62,25 @@
         </div>
     </div>
 
+    <!-- MENÚ DE PAUSA (ESC) -->
+    <div id="menu-pausa" class="hidden">
+        <div class="pausa-box">
+            <h1>PAUSA</h1>
+            <div class="pausa-botones">
+                <button id="btn-pausa-continuar" class="action-btn">CONTINUAR</button>
+                <button id="btn-pausa-guardar" class="action-btn btn-blue">GUARDAR Y SALIR</button>
+                <button id="btn-pausa-salir" class="action-btn btn-red">SALIR SIN GUARDAR</button>
+            </div>
+        </div>
+    </div>
+
     <!-- COPYRIGHT -->
     <div class="copyright">© 2026 Auralis Team · v1.0</div>
 
-    <!-- THREE.JS PRIMERO -->
+    <!-- SCRIPTS -->
     <script src="js/three.min.js"></script>
-    <!-- MAIN (audio global) -->
     <script src="js/main.js"></script>
-    <!-- LÓGICA DEL JUEGO 3D -->
+    <script src="js/interiores.js"></script>
     <script src="js/juego.js"></script>
 </body>
 </html>

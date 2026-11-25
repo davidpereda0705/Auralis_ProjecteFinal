@@ -68,6 +68,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const flashOverlay = document.querySelector('.flash-overlay');
     
     if (menuItems.length > 0) {
+        // --- COMPROBAR PARTIDA GUARDADA ---
+        const btnContinuar = document.getElementById('menu-continuar');
+        const partidaGuardada = localStorage.getItem('auralis_elegido_nombre');
+
+        if (btnContinuar && !partidaGuardada) {
+            // Si no hay partida, lo deshabilitamos visualmente
+            btnContinuar.style.opacity = '0.4';
+            btnContinuar.style.pointerEvents = 'none'; // No se puede hacer clic
+            btnContinuar.querySelector('.label').textContent = 'Continuar (Sin Partida)';
+        }
+        // ---------------------------------
+
         let selectedIndex = 0;
         
         function updateSelection() {
@@ -83,17 +95,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         function activateItem(item) {
+            // Si es el botón de continuar y no hay partida, no hace nada
+            if (item.dataset.action === 'continuar' && !localStorage.getItem('auralis_elegido_nombre')) {
+                return;
+            }
+
             playSelectSound();
             triggerFlash();
             item.classList.add('pressed');
             
             const target = item.dataset.target;
+            const action = item.dataset.action;
             
             setTimeout(() => {
                 item.classList.remove('pressed');
-                if (target && target !== '#') {
+                
+                // Si es "Nueva Partida", pedimos confirmación si hay datos
+                if (action === 'nueva-partida') {
+                    if (localStorage.getItem('auralis_elegido_nombre')) {
+                        const confirmar = confirm("¿Seguro que quieres empezar una nueva partida? Perderás tu Auralis actual.");
+                        if (!confirmar) return; // Si dice que no, no hace nada
+                    }
+                    localStorage.removeItem('auralis_elegido_nombre');
+                    localStorage.removeItem('auralis_elegido_id');
+                    window.location.href = 'historia-intro.html';
+                } 
+                // Si es "Continuar", vamos directos al juego
+                else if (action === 'continuar') {
+                    window.location.href = 'juego.html';
+                }
+                // Si es un enlace normal (Auralis, Historia, etc)
+                else if (target && target !== '#') {
                     window.location.href = target;
-                } else {
+                } 
+                else {
                     console.log('Opción no implementada aún:', item.querySelector('.label').textContent);
                 }
             }, 200);

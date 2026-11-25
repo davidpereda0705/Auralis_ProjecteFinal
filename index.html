@@ -26,18 +26,23 @@
     <!-- OVERLAY DE DESTELLO -->
     <div class="flash-overlay"></div>
     
-
     <!-- TÍTULO -->
     <div class="title-container">
         <h1 class="game-title">AURALIS</h1>
         <h2 class="game-subtitle">EL DESPERTAR</h2>
     </div>
+    
     <!-- MENÚ INFERIOR -->
     <div class="menu-box">
         <ul class="menu-list">
-            <li class="menu-item selected" data-target="historia-intro.html">
+            <li class="menu-item selected" data-action="nueva-partida">
                 <span class="cursor">▶</span>
                 <span class="label">Nueva Partida</span>
+            </li>
+            <!-- NUEVO BOTÓN CONTINUAR -->
+            <li class="menu-item" id="menu-continuar" data-action="continuar">
+                <span class="cursor">▶</span>
+                <span class="label">Continuar</span>
             </li>
             <li class="menu-item" data-target="auralis.html">
                 <span class="cursor">▶</span>
@@ -58,7 +63,6 @@
         </ul>
     </div>
     
-
     <!-- INDICADOR PULSA ENTER -->
     <div class="press-start">
         <span>PULSA ENTER</span>
@@ -66,7 +70,6 @@
     
     <!-- COPYRIGHT -->
     <div class="copyright">© 2026 Auralis Team · v1.0</div>
-    
     
     <script src="js/main.js"></script>
 </body>
